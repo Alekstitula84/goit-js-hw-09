@@ -14,6 +14,7 @@ stopBtn.addEventListener("click", () => {
     stopTimer()
 });
 
+let timerId = undefined;
 
 function changecolour() {
     bodyStyle.style.backgroundColor = getRandomHexColor();
