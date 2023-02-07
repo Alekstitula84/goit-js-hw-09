@@ -14,6 +14,7 @@ const divEl = document.querySelector(".timer");
 
 
 let timer = null;
+let nowDate = null;
 
 //flatpickr
 
@@ -24,12 +25,13 @@ const options = {
     minuteIncrement: 1,
     onClose(selectedDate) {
         // const currentDate = new Date();
-        if (selectedDate[0] <= new Date()) {
+        if (selectedDate[0] < new Date()) {
             startBtn.disabled = true;
             Notiflix.Notify.failure('Please choose a date in the future');
         } else {
             startBtn.disabled = false;
             startBtn.addEventListener('click', countdownTime);
+            nowDate = selectedDate[0];
         }
     },
 };
@@ -38,9 +40,7 @@ const options = {
 function countdownTime() {
     timer = setInterval(() => {
         startBtn.disabled = true;
-        const dateChoosenMs = new Date(dateChosen.value.replace(/-/g, '/')).getTime();
-        const now = new Date().getTime();
-        const timeLeft = dateChoosenMs - now;
+        const timeLeft = nowDate - new Date();
         const { days, hours, minutes, seconds } = convertMs(timeLeft);
         day.innerHTML = addZero(days);
         hour.innerHTML = addZero(hours);
