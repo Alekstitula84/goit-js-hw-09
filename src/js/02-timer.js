@@ -30,6 +30,7 @@ const options = {
             Notiflix.Notify.failure('Please choose a date in the future');
         } else {
             startBtn.disabled = false;
+            Notiflix.Notify.success('Success');
             startBtn.addEventListener('click', countdownTime);
             nowDate = selectedDate[0];
         }
@@ -42,11 +43,12 @@ function countdownTime() {
         startBtn.disabled = true;
         const timeLeft = nowDate - new Date();
         const { days, hours, minutes, seconds } = convertMs(timeLeft);
-        day.innerHTML = addZero(days);
-        hour.innerHTML = addZero(hours);
-        minute.innerHTML = addZero(minutes);
-        second.innerHTML = addZero(seconds);
-        if (timeLeft < 1000) {
+        day.innerHTML = addLeadingZero(days);
+        hour.innerHTML = addLeadingZero(hours);
+        minute.innerHTML = addLeadingZero(minutes);
+        second.innerHTML = addLeadingZero(seconds);
+        if (timeLeft <= 1000) {
+            Notiflix.Report.warning('Time over')
             clearInterval(timer);
             startBtn.disabled = false;
         }
@@ -54,7 +56,7 @@ function countdownTime() {
 }
 
 // addLeadingZero
-function addZero(number) {
+function addLeadingZero(number) {
     return String(number).padStart(2, 0);
 }
 
